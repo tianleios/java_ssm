@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tianlei.dao.ProductMapper">
+
+    <resultMap id="productMapper" type="com.tianlei.pojo.Product">
+
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="stock" column="stock"/>
+        <result property="price" column="price"/>
+        <result property="createDatetime" column="create_datetime"/>
+        <result property="updateDatetime" column="update_datetime"/>
+
+    </resultMap>
+
+    <sql id="product">
+        id,name,stock,price,create_datetime,update_datetime
+    </sql>
+
+    <insert id="insert" parameterType="com.tianlei.pojo.Product" >
+        INSERT INTO
+            `product`(name,stock,price,create_datetime,update_datetime)
+        VALUES
+            (#{name},#{stock},#{price},now(),now());
+    </insert>
+
+</mapper>

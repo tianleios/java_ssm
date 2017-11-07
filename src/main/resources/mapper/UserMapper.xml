@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的 -->
+
+<mapper namespace="com.tianlei.dao.UserMapper">
+    <!-- 根据id查询得到一个user对象 -->
+    <resultMap type="com.tianlei.pojo.User" id="userMap">
+       <id property="id" column="id" />
+       <result property="phone" column="phone" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="createTime" column="create_time"/>
+       <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="user">
+        id,phone,username,password,create_time,update_time
+    </sql>
+
+
+    <insert id="insertUser" parameterType="com.tianlei.pojo.User">
+
+        INSERT INTO `user`(phone,username,password,create_time,update_time) VALUES (
+               #{phone},#{username},#{password},#{createTime},#{updateTime}
+        )
+        ;
+    </insert>
+
+    <update id="changePwd" >
+        UPDATE `user` SET password = #{password} where id = #{userId};
+    </update>
+
+
+    <select id="getUsers"  resultType="com.tianlei.pojo.User" resultMap="userMap">
+        SELECT
+           <include refid="user"/>
+        from user;
+    </select>
+
+    <select id="getUserByMobile" parameterType="String" resultType="com.tianlei.pojo.User">
+        SELECT
+            <include refid="user"/>
+         FROM `user`
+        WHERE phone = #{phone}
+    </select>
+
+    <select id="getUsersByPage" parameterType="int"  resultType="com.tianlei.pojo.User" resultMap="userMap">
+        SELECT
+        <include refid="user"/>
+        from user LIMIT #{start},#{limit};
+    </select>
+
+
+
+    <select id="checkUser" resultType="int" parameterType="java.lang.String" >
+        SELECT count(1) FROM `user` WHERE phone = #{phone}
+    </select>
+
+
+</mapper>
