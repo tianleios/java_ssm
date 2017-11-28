@@ -4,10 +4,12 @@ import com.tianlei.common.Response;
 import com.tianlei.dao.UserMapper;
 import com.tianlei.pojo.User;
 import com.tianlei.service.IUserService;
+import com.tianlei.valid.AutoValidating;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,6 +33,16 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @AutoValidating
+    public void validTest(@NotBlank String str) {
+            System.out.print("validTest");
+    }
+
+    @Override
+    public void validTest1(String args) {
+
+    }
 
     public Response<List<User>> getUsers() {
 

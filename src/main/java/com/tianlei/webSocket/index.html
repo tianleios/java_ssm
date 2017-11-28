@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>websocket</title>
+</head>
+
+<script>
+    var uid1 = "uid1";
+    var uid2 = "uid2"
+</script>
+
+<body>
+<div>连1接</div>
+
+<div id="websocket-content-1" style="background-color: orange; min-height: 30px;"></div>
+<div id="websocket-content-2" style="background-color: cyan; min-height: 30px;"></div>
+
+
+<script>
+
+    var ws  = new WebSocket("ws://localhost:8080/ws");
+
+    console.log("执行了");
+
+    //接收数据
+    ws.onmessage = function (data) {
+
+        console.log("接受信息uid1");
+
+        var ele =  document.getElementById("websocket-content-1");
+        ele.innerHTML = data.data;
+
+    };
+
+    //
+    ws.onopen = function (event) {
+
+        console.log("连接成功uid1");
+
+        if (ws.readyState == WebSocket.OPEN) {
+
+            ws.send("view");
+
+
+        }
+
+    };
+
+    ws.onerror = function (error) {
+
+        console.log("uid1 error");
+        console.log(error);
+
+    };
+
+    ws.onclose = function (event) {
+
+        console.log(event);
+
+    };
+
+
+
+</script>
+
+
+
+<!---->
+<script>
+
+    var func = function () {
+
+        var ws  = new WebSocket("ws://localhost:8080/ws");
+
+        ws.send("00000");
+        //接收数据
+        ws.onmessage = function (data) {
+
+            console.log(data);
+            var ele =  document.getElementById("websocket-content-2");
+            ele.innerHTML = data.data;
+
+        };
+
+        //
+        ws.onopen = function (event) {
+
+            console.log("连接成功uid2");
+
+            if (ws.readyState == WebSocket.OPEN) {
+
+                ws.send("uid2");
+
+            }
+
+        };
+
+        ws.onclose = function (error) {
+
+            console.log("连接失败" + error);
+
+        };
+
+        ws.onerror = function (error) {
+
+            console.log("uid2 error");
+            console.log(error);
+
+        };
+
+
+    }
+
+    //    func();
+
+    //    setTimeout(function () {
+    //
+    //        func();
+    //
+    //    },50000);
+
+</script>
+
+</body>
+</html>

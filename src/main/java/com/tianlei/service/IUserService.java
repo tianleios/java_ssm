@@ -2,6 +2,7 @@ package com.tianlei.service;
 
 import com.tianlei.common.Response;
 import com.tianlei.pojo.User;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.List;
 
@@ -16,5 +17,8 @@ public interface IUserService {
     public Response<List<User> > getUsers();
     public Response<List<User> > getUsersByPage(int start,int limit);
 
+
+    public void validTest( String args);
+    public void validTest1(@NotBlank String args);
 
 }
