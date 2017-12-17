@@ -29,11 +29,16 @@
 
     <!--</environments>-->
 
+    <plugins>
+        <plugin interceptor="com.tianlei.myBatisPlugins.MyBatisPlugin">
+        </plugin>
+    </plugins>
 
-    <mappers>
-        <mapper class="com.tianlei.dao.UserMapper"/>
-        <!--当前配置文件的相对路径 / 可不加-->
-        <mapper resource="/mapper/UserMapper.xml"/>
-    </mappers>
+    <!--<mappers>-->
+        <!--<mapper class="com.tianlei.dao.UserMapper"/>-->
+        <!--&lt;!&ndash;当前配置文件的相对路径 / 可不加&ndash;&gt;-->
+        <!--<mapper resource="/mapper/UserMapper.xml"/>-->
+    <!--</mappers>-->
+
 
 </configuration>

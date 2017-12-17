@@ -3,7 +3,7 @@ package grammar;
 /**
  * Created by tianlei on 2017/十一月/24.
  */
-
+import io.shardingjdbc.core.keygen.DefaultKeyGenerator;
 
 /**
  * Twitter_Snowflake<br>
@@ -23,7 +23,13 @@ public class SnowflakeIdWorker {
     /**
      * 开始时间截 (2015-01-01)
      */
+
     private final long twepoch = 1420041600000L;
+
+//  private final long twepoch = 1510000000000L;
+//150  50038548170014723
+//151  8095736067522566
+//       385409903176450051
 
     /**
      * 机器id所占的位数
@@ -179,11 +185,23 @@ public class SnowflakeIdWorker {
      * 测试
      */
     public static void main(String[] args) {
-        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
-        for (int i = 0; i < 10; i++) {
-            long id = idWorker.nextId();
-            System.out.println(Long.toBinaryString(id));
+//        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
+//        for (int i = 0; i < 100; i++) {
+//            long id = idWorker.nextId();
+////            System.out.println(Long.toBinaryString(id));
+//            System.out.println(id);
+//        }
+
+        //dangdang
+      DefaultKeyGenerator defaultKeyGenerator =  new DefaultKeyGenerator();
+
+        for (int i = 0; i < 100; i++) {
+
+            long id = defaultKeyGenerator.generateKey().longValue();
+
             System.out.println(id);
         }
+
+
     }
 }

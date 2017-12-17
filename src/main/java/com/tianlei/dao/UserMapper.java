@@ -1,10 +1,8 @@
 package com.tianlei.dao;
 
 import com.tianlei.pojo.User;
-import org.apache.ibatis.annotations.*;
-import org.mybatis.spring.annotation.MapperScan;
+import org.apache.ibatis.annotations.Param;
 
-import java.io.StringReader;
 import java.util.List;
 
 /**
@@ -28,6 +26,11 @@ public interface UserMapper {
     List<User> getUsersByPage(@Param("start") int start, @Param("limit") int limit);
 
     int checkUser(String phone);
+    int updateUserByPrimaryKeyScentive(User user);
+    int updateUserByPrimaryKey(User user);
+
+    User getUserById(Integer id);
+
 
 
 }

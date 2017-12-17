@@ -56,5 +56,28 @@
         SELECT count(1) FROM `user` WHERE phone = #{phone}
     </select>
 
+    <select id="getUserById" resultMap="userMap">
+        SELECT * FROM  user WHERE id=#{id}
+    </select>
+
+    <update id="updateUserByPrimaryKeyScentive" parameterType="com.tianlei.pojo.User">
+        UPDATE user
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="password != null">
+                `password`=#{password}
+            </if>
+        </set>
+              where id = #{id}
+    </update>
+
+    <update id="updateUserByPrimaryKey">
+        UPDATE user set username=#{username},password=#{password},update_time=now() where id=#{id}
+    </update>
+
+
+
 
 </mapper>

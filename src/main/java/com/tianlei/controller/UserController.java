@@ -6,24 +6,19 @@ import com.tianlei.pojo.Product;
 import com.tianlei.pojo.User;
 import com.tianlei.service.IUserService;
 import io.jsonwebtoken.*;
-import org.apache.http.client.utils.DateUtils;
-import org.hibernate.validator.constraints.NotBlank;
+import io.jsonwebtoken.impl.crypto.MacProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
+import java.security.Key;
 import java.util.Date;
 import java.util.List;
-
-import io.jsonwebtoken.impl.crypto.MacProvider;
-
-import java.security.Key;
 
 /**
  * Created by tianlei on 2017/7/30.
@@ -164,7 +159,7 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(path = "/test", method = RequestMethod.GET)
-    public User test() {
+    public User test(String tag, String isTx) throws Exception {
 
         Integer integer = new Integer(1);
         Product product = new Product();
@@ -180,6 +175,8 @@ public class UserController {
 
         User user = new User();
         user.setUsername("名字");
+
+        this.iUserService.txTest(tag,isTx);
         return user;
     }
 

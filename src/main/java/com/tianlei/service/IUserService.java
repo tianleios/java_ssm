@@ -20,5 +20,6 @@ public interface IUserService {
 
     public void validTest( String args);
     public void validTest1(@NotBlank String args);
+    public void txTest(String tag, String isTx) throws Exception;
 
 }

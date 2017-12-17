@@ -10,17 +10,15 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.*;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import javax.transaction.Transactional;
-import javax.validation.*;
 
 
 /**
@@ -36,7 +34,7 @@ public class UserServiceImpl implements IUserService {
 
     @AutoValidating
     public void validTest(@NotBlank String str) {
-            System.out.print("validTest");
+        System.out.print("validTest");
     }
 
     @Override
@@ -58,7 +56,7 @@ public class UserServiceImpl implements IUserService {
             String source = "mybatis-config.xml";
             InputStream inputStream = Resources.getResourceAsStream(source);
 
-            SqlSessionFactory sqlSessionFactory = new  SqlSessionFactoryBuilder().build(inputStream);
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
             SqlSession sqlSession = sqlSessionFactory.openSession();
             userMapper = sqlSession.getMapper(UserMapper.class);
 
@@ -69,7 +67,7 @@ public class UserServiceImpl implements IUserService {
         }
 
 
-        return Response.success(userMapper.getUsersByPage(start,limit));
+        return Response.success(userMapper.getUsersByPage(start, limit));
 
     }
 
@@ -89,21 +87,21 @@ public class UserServiceImpl implements IUserService {
 
             Iterator<ConstraintViolation<Object>> iterator = set.iterator();
             if (iterator.hasNext()) {
-                ConstraintViolation<Object> constraintViolation =  iterator.next();
-             Path path = constraintViolation.getPropertyPath(); //属性名称
+                ConstraintViolation<Object> constraintViolation = iterator.next();
+                Path path = constraintViolation.getPropertyPath(); //属性名称
 
-             String str =  constraintViolation.getMessageTemplate(); //注释的信息
+                String str = constraintViolation.getMessageTemplate(); //注释的信息
                 //throw  抛出异常
                 stringBuilder.append(str);
             }
             throw new Exception(stringBuilder.toString());
 
-        } else  {
+        } else {
             return Boolean.TRUE;
         }
     }
 
-    public Response<String> regUser( User user) {
+    public Response<String> regUser(User user) {
 
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         Validator validator = validatorFactory.getValidator();
@@ -112,10 +110,10 @@ public class UserServiceImpl implements IUserService {
 
             Iterator<ConstraintViolation<User>> iterator = set.iterator();
             if (iterator.hasNext()) {
-               ConstraintViolation<User> constraintViolation =  iterator.next();
-               constraintViolation.getPropertyPath(); //属性名称
-               constraintViolation.getMessageTemplate(); //注释的信息
-               //throw  抛出异常
+                ConstraintViolation<User> constraintViolation = iterator.next();
+                constraintViolation.getPropertyPath(); //属性名称
+                constraintViolation.getMessageTemplate(); //注释的信息
+                //throw  抛出异常
             }
 
         }
@@ -130,35 +128,35 @@ public class UserServiceImpl implements IUserService {
             String source = "mybatis-config.xml";
             InputStream inputStream = Resources.getResourceAsStream(source);
 
-            SqlSessionFactory sqlSessionFactory = new  SqlSessionFactoryBuilder().build(inputStream);
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
             //autoCommit, 打开了事务 注意提交
             sqlSession = sqlSessionFactory.openSession(true);
             userMapper = sqlSession.getMapper(UserMapper.class);
 
         } catch (Exception e) {
 
-           e.printStackTrace();
+            e.printStackTrace();
 
         }
 
         int count = userMapper.insertUser(user);
         if (count == 1) {
 
-          return Response.success("注册成功");
+            return Response.success("注册成功");
 
         }
 
-        return Response.failure(1,"注册失败");
+        return Response.failure(1, "注册失败");
     }
 
     public Response<User> getUserByMobile(String mobile) {
         if (mobile == null) {
-            return Response.failure(1,"手机号不能为空");
+            return Response.failure(1, "手机号不能为空");
         }
 
-      User user = this.userMapper.getUserByMobile(mobile);
+        User user = this.userMapper.getUserByMobile(mobile);
         if (user == null) {
-            return Response.failure(1,"不存在该用户");
+            return Response.failure(1, "不存在该用户");
         }
         return Response.success(user);
     }
@@ -168,16 +166,16 @@ public class UserServiceImpl implements IUserService {
 
         User user = this.userMapper.getUserByMobile(mobile);
         if (user == null) {
-            return Response.failure(1,"用户不存在");
+            return Response.failure(1, "用户不存在");
         }
 
 
-     int count =  userMapper.changePwd(user.getId(),password);
+        int count = userMapper.changePwd(user.getId(), password);
         if (count == 1) {
             return Response.success("修改成功");
-        } else  {
+        } else {
 
-            return Response.failure(1,"修改失败");
+            return Response.failure(1, "修改失败");
 
         }
 
@@ -189,5 +187,26 @@ public class UserServiceImpl implements IUserService {
 
     public UserMapper getUserMapper() {
         return userMapper;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void txTest(String tag, String isTx) throws Exception {
+
+        User user = this.userMapper.getUserById(1);
+//        user.setId(1);
+        user.setUsername("username" + tag);
+        this.userMapper.updateUserByPrimaryKeyScentive(user);
+
+        if (isTx.equals("1")) {
+
+            throw new Exception("xxx修改失败xxx" + tag);
+
+        }
+
+        User user1 = this.userMapper.getUserById(1);
+        System.out.print(user1.getUsername());
+        user1.setPassword("password" + tag);
+        this.userMapper.updateUserByPrimaryKeyScentive(user1);
+
     }
 }

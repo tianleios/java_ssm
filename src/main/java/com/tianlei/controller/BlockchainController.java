@@ -1,27 +1,25 @@
 package com.tianlei.controller;
 
-import com.sun.tools.corba.se.idl.constExpr.Or;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.DefaultBlockParameterNumber;
 import org.web3j.protocol.core.Request;
-import org.web3j.protocol.core.methods.request.RawTransaction;
-import org.web3j.protocol.core.methods.response.*;
+import org.web3j.protocol.core.methods.response.EthGetBalance;
+import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import org.web3j.protocol.http.HttpService;
-import org.web3j.protocol.infura.InfuraHttpService;
-import org.web3j.protocol.parity.Parity;
-import org.web3j.protocol.parity.methods.response.PersonalUnlockAccount;
 import rx.Observable;
-import rx.Subscription;
 
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
+//import org.web3j.protocol.infura.InfuraHttpService;
+//import org.web3j.protocol.parity.Parity;
+//import org.web3j.protocol.parity.methods.response.PersonalUnlockAccount;
 
 /**
  * Created by tianlei on 2017/十月/15.
@@ -75,35 +73,35 @@ public class BlockchainController {
         String otherAddress = to;
         //
         String mineAddressPasssword = "q4121585";
-        Parity parity = Parity.build(new HttpService());
-        PersonalUnlockAccount personalUnlockAccount = parity.personalUnlockAccount(mineAddress, mineAddressPasssword).sendAsync().get();
-        //
-        if (!personalUnlockAccount.accountUnlocked()) {
-            //账户处于锁定状态
-            return;
-        }
+//        Parity parity = Parity.build(new HttpService());
+//        PersonalUnlockAccount personalUnlockAccount = parity.personalUnlockAccount(mineAddress, mineAddressPasssword).sendAsync().get();
+//        //
+//        if (!personalUnlockAccount.accountUnlocked()) {
+//            //账户处于锁定状态
+//            return;
+//        }
 
 
         //获得 nonce
-        EthGetTransactionCount transactionCount = web3j.ethGetTransactionCount(mineAddress, DefaultBlockParameterName.LATEST).sendAsync().get();
-
-            BigInteger nonce = transactionCount.getTransactionCount();
-            BigInteger gasPrice = BigInteger.valueOf(2);
-            BigInteger gaslimit = BigInteger.valueOf(30000);
-
-            BigInteger jinLv = new BigInteger("1000000000000000000");
-            BigInteger value = amount.multiply(jinLv);
-
-            //1.创建交易
-            org.web3j.protocol.core.methods.request.Transaction transaction = org.web3j.protocol.core.methods.request.Transaction.createEtherTransaction(mineAddress, nonce, gasPrice, gaslimit, otherAddress, value);
-
-            //2.发起交易
-            EthSendTransaction ethSendTransactionResp = parity.ethSendTransaction(transaction).sendAsync().get();
-
-            //结果哈希
-            String transactionHash = ethSendTransactionResp.getTransactionHash();
-
-            int a = 10;
+//        EthGetTransactionCount transactionCount = web3j.ethGetTransactionCount(mineAddress, DefaultBlockParameterName.LATEST).sendAsync().get();
+//
+//            BigInteger nonce = transactionCount.getTransactionCount();
+//            BigInteger gasPrice = BigInteger.valueOf(2);
+//            BigInteger gaslimit = BigInteger.valueOf(30000);
+//
+//            BigInteger jinLv = new BigInteger("1000000000000000000");
+//            BigInteger value = amount.multiply(jinLv);
+//
+//            //1.创建交易
+//            org.web3j.protocol.core.methods.request.Transaction transaction = org.web3j.protocol.core.methods.request.Transaction.createEtherTransaction(mineAddress, nonce, gasPrice, gaslimit, otherAddress, value);
+//
+//            //2.发起交易
+//            EthSendTransaction ethSendTransactionResp = parity.ethSendTransaction(transaction).sendAsync().get();
+//
+//            //结果哈希
+//            String transactionHash = ethSendTransactionResp.getTransactionHash();
+//
+//            int a = 10;
 
 
     }
@@ -160,31 +158,31 @@ public class BlockchainController {
         String otherAddress = "0x7132067c3447f65a6cf8c67ea2fca85c0e4f7593";
         String mineAddressPasssword = "q4121585";
 
-        Parity parity = Parity.build(new HttpService());
-        PersonalUnlockAccount personalUnlockAccount = parity.personalUnlockAccount(mineAddress, mineAddressPasssword).sendAsync().get();
-
-        //
-        if (personalUnlockAccount.accountUnlocked()) {
+//        Parity parity = Parity.build(new HttpService());
+//        PersonalUnlockAccount personalUnlockAccount = parity.personalUnlockAccount(mineAddress, mineAddressPasssword).sendAsync().get();
+//
+//        //
+//        if (personalUnlockAccount.accountUnlocked()) {
 
 //            org.web3j.protocol.core.methods.request.Transaction.createContractTransaction(mineAddress,new BigInteger(1),new BigInteger(1),"122");
 //        }
 
 
-            EthGetTransactionCount transactionCount = web3j.ethGetTransactionCount(mineAddress, DefaultBlockParameterName.LATEST).sendAsync().get();
+//            EthGetTransactionCount transactionCount = web3j.ethGetTransactionCount(mineAddress, DefaultBlockParameterName.LATEST).sendAsync().get();
+//
+//            BigInteger nonce = transactionCount.getTransactionCount();
+//            BigInteger gasPrice = BigInteger.valueOf(2);
+//            BigInteger gaslimit = BigInteger.valueOf(30000);
+//            BigInteger value = BigInteger.valueOf(10);
+//
+//            org.web3j.protocol.core.methods.request.Transaction transaction = org.web3j.protocol.core.methods.request.Transaction.createEtherTransaction(mineAddress, nonce, gasPrice, gaslimit, otherAddress, value);
+//
+//            EthSendTransaction ethSendTransactionResp = parity.ethSendTransaction(transaction).sendAsync().get();
+//            String transactionHash = ethSendTransactionResp.getTransactionHash();
+//
+//            int a = 10;
 
-            BigInteger nonce = transactionCount.getTransactionCount();
-            BigInteger gasPrice = BigInteger.valueOf(2);
-            BigInteger gaslimit = BigInteger.valueOf(30000);
-            BigInteger value = BigInteger.valueOf(10);
-
-            org.web3j.protocol.core.methods.request.Transaction transaction = org.web3j.protocol.core.methods.request.Transaction.createEtherTransaction(mineAddress, nonce, gasPrice, gaslimit, otherAddress, value);
-
-            EthSendTransaction ethSendTransactionResp = parity.ethSendTransaction(transaction).sendAsync().get();
-            String transactionHash = ethSendTransactionResp.getTransactionHash();
-
-            int a = 10;
-
-        }
+//        }
     }
 
     @ResponseBody
