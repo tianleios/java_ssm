@@ -1,2 +1,9 @@
 .idea
-target
+/.classpath
+/.project
+/.settings
+/*.iml
+/target
+/classes
+log4j.properties
+*.log
