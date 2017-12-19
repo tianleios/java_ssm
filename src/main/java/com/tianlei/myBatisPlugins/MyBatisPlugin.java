@@ -56,7 +56,7 @@ public class MyBatisPlugin implements Interceptor {
         if (invocation.getTarget() instanceof DefaultParameterHandler) {
             DefaultParameterHandler parameterHandler = (DefaultParameterHandler)invocation.getTarget();
         }
-        
+
 
 
         return invocation.proceed();

@@ -1,16 +1,16 @@
 import com.tianlei.dao.UserMapper;
 import com.tianlei.pojo.Product;
 import com.tianlei.pojo.User;
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.validation.*;
-import java.io.InputStream;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -130,6 +130,21 @@ public class MybatisTest {
         String lastInfoStr = stringBuilder.toString();
 
         return null;
+    }
+
+    public static void main(String[] args) {
+
+        Runtime runtime = Runtime.getRuntime();
+
+        try {
+
+         Process process =  runtime.exec("pwd");
+         int a = 10;
+
+        } catch (Exception e)  {
+
+        }
+
     }
 
 
