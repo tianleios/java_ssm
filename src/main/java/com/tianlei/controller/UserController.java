@@ -5,8 +5,7 @@ import com.tianlei.common.Response;
 import com.tianlei.pojo.Product;
 import com.tianlei.pojo.User;
 import com.tianlei.service.IUserService;
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.impl.crypto.MacProvider;
+import eth.ProductAddress.ETHAddressFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
-import java.security.Key;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,73 +28,7 @@ public class UserController {
     @Autowired
     private IUserService iUserService;
 
-    public static void main(String[] args) {
 
-        //问题： 怎样实现 切换终端登录，以前的哪个要失效
-
-        //签名的key 前2部分, 用该key签名，得到协议的第三部分
-        // key应该固定
-        // 生成一个特殊的key
-        //  xxxxx.yyyyy.zzzzz
-        //  Header
-        //  Payload
-        //  Signature
-        // 保护好这个私钥，这个私钥很重要
-        Key key = MacProvider.generateKey();
-
-        //
-        String sub = "userId";
-
-        //完整的签名结果
-
-
-        JwtBuilder jwtBuilder =  Jwts.builder();
-
-
-        //1. Reserved claims 标准的声明
-         //主题
-        jwtBuilder.setSubject(sub);
-         //签发者
-        jwtBuilder.setIssuer("");
-         //观众
-        jwtBuilder.setAudience("");
-        // jwt的签发时间
-        jwtBuilder.setIssuedAt(new Date());
-        // 延迟生效的时间
-        jwtBuilder.setNotBefore(new Date());
-         //失效时间，设为一天
-        jwtBuilder.setExpiration( new Date(new Date().getTime() + 24*3600));
-        // jti: jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。
-        jwtBuilder.setId("");
-
-
-        //2. Public claims: 共有的
-
-        //3. Private claims: 私有的
-
-        //签名并获取结果
-        String compactJws = jwtBuilder.signWith(SignatureAlgorithm.HS512, key).compact();
-
-        try {
-
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(key).parseClaimsJws(compactJws);
-            //获取结果
-            String resultStr = claimsJws.getBody().getSubject();
-            // 加入resultStr 为userId, 就可以把userId取出来
-            if (resultStr.equals(sub)) {
-
-
-
-            }
-
-        } catch (SignatureException e) {
-            //验证失败
-
-        }
-        System.out.print("");
-
-
-    }
 
     //
     @ResponseBody
@@ -144,6 +75,15 @@ public class UserController {
     @ResponseBody
     @RequestMapping(path = "/list", method = RequestMethod.GET)
     public Response<List<User>> getUsers() {
+
+        try {
+
+            String address = ETHAddressFactory.productAddress("222");
+
+        } catch (Exception e) {
+
+
+        }
 
         return iUserService.getUsers();
 
