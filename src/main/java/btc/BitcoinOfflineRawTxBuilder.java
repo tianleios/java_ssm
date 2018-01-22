@@ -66,7 +66,9 @@ public class BitcoinOfflineRawTxBuilder {
     }
 
 
-    // 交易离线签名
+    /*
+    交易离线签名
+    * */
     public String offlineSign() throws BitcoinException {
 
         //获取签名
@@ -91,6 +93,22 @@ public class BitcoinOfflineRawTxBuilder {
             throw new BitcoinException("complete 为 false,签名失败");
         }
 
+    }
+
+   /*
+     预估交易的大小，单位为bytes。用于交易手续费调整
+   * */
+    public int calculateSize(){
+        if (this.inputs == null ||
+                this.outputs == null ||
+                this.inputs.size() <=0 ||
+                this.outputs.size() <= 0
+                ) {
+            return 0;
+        }
+
+//      148 * number_of_inputs + 34 * number_of_outputs + 10
+        return this.inputs.size()*148 + this.outputs.size()*34 + 10;
     }
 
     private List<Map> getInPut(boolean isIncludeScriptPubKey) {
@@ -162,7 +180,6 @@ public class BitcoinOfflineRawTxBuilder {
             e.printStackTrace();
             System.out.print("离线签名失败");
 
-
         }
 
     }
@@ -172,17 +189,17 @@ public class BitcoinOfflineRawTxBuilder {
         //以下进行测试
         // 代码运行机器要有，一个测试测试网路在跑 regTest
         // in
-        OfflineTxInput offlineTxInput = new OfflineTxInput("ccf72cb47ea7703600a4b1867b5634c2441cdccd8da46744053925df0ad00d34",
+        OfflineTxInput offlineTxInput = new OfflineTxInput("8dcae3106df74a3188fa7738770674a14d1732c8f1bff64403f040845c9c34bb",
                 1,
                 "76a9144903332b1ee2b8d4055af4522bb87bb03f095d7988ac",
                 "cUt9mB4HGXmE69qo5DmiP3CzuGezu3NsLfzMRQFfWXcdogaV62MK"
         );
 
         //out
-        OfflineTxOutput offlineTxOutput = new OfflineTxOutput("mozzgao5GWmeZZRUQn9SU6TZGy7YovceKT", BigDecimal.valueOf(0.22));
+        OfflineTxOutput offlineTxOutput = new OfflineTxOutput("mozzgao5GWmeZZRUQn9SU6TZGy7YovceKT", BigDecimal.valueOf(0.2));
 
         //找零
-        OfflineTxOutput offlineTxOutputling = new OfflineTxOutput("mnB1TPWm7vtaqycZGXBkjwtkVq6Vzb6Nci", BigDecimal.valueOf(1));
+        OfflineTxOutput offlineTxOutputling = new OfflineTxOutput("mnB1TPWm7vtaqycZGXBkjwtkVq6Vzb6Nci", BigDecimal.valueOf(0.799));
 
         //
         BitcoinOfflineRawTxBuilder bitcoinOfflineRawTxBuilder = new BitcoinOfflineRawTxBuilder();
