@@ -18,12 +18,14 @@
 >
 
     <context:component-scan base-package="com.tianlei" annotation-config="true"/>
+    <context:component-scan base-package="com.btc" annotation-config="true"/>
+
     <!--<aop:aspectj-autoproxy/>-->
 
 
-    <aop:aspectj-autoproxy/>
-    <context:component-scan base-package="com.tianlei" annotation-config="true"/>
-    <context:component-scan base-package="grammar" annotation-config="true"/>
+    <!--<aop:aspectj-autoproxy/>-->
+    <!--<context:component-scan base-package="com.tianlei" annotation-config="true"/>-->
+    <!--<context:component-scan base-package="grammar" annotation-config="true"/>-->
 
     <!-- 数据库相关 -->
     <import resource="applicationContext-datasource.xml"/>

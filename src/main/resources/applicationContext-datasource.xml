@@ -32,7 +32,10 @@
     </bean>
 
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.tianlei.dao"/>
+
+        <property name="basePackage" value="com"/>
+        <!--<property name="basePackage" value="com.tianlei.dao"/>-->
+        <!--<property name="basePackage" value="com.tianlei.dao"/>-->
         <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />-->
     </bean>
 

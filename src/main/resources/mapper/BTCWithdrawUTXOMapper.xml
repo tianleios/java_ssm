@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.btc.demo.dao.BTCWithdrawUTXOMapper">
-    <resultMap id="BaseResultMap" type="com.btc.demo.domain.BTCWithdrawUTXO">
+<mapper namespace="com.btc.dao.BTCWithdrawUTXOMapper">
+    <resultMap id="BaseResultMap" type="com.btc.domain.BTCWithdrawUTXO">
         <id column="txid" jdbcType="CHAR" property="txid" />
         <id column="vout" jdbcType="INTEGER" property="vout" />
         <result column="count" jdbcType="DECIMAL" property="count" />
@@ -11,7 +11,7 @@
         <result column="status" jdbcType="VARCHAR" property="status" />
         <result column="withdra_twxid" jdbcType="CHAR" property="withdrawTxid" />
     </resultMap>
-    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.btc.demo.domain.BTCDefaultUTXO">
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.btc.domain.BTCWithdrawUTXO">
         <result column="script_pub_key" jdbcType="LONGVARCHAR" property="scriptPubKey" />
     </resultMap>
     <sql id="Base_Column_List">
@@ -25,18 +25,22 @@
 
     <insert id="insertBatch" parameterType="List">
 
-        insert into btc_default_utxo (txid, vout, count,
+        insert into btc_withdraw_utxo (txid, vout, count,
         address, sync_time, block_height,
         status, spend_txid, script_pub_key
         )
         VALUES
-        <foreach collection="defaultUTXOList" item="utxo" open="(" separator="," close=")" >
+        <foreach collection="withdrawUTXOList" item="utxo" open="(" separator="," close=")" >
             #{utxo.txid}, #{utxo.vout}, #{utxo.count},
             #{utxo.address}, #{utxo.syncTime}, #{utxo.blockHeight},
             #{utxo.status}, #{utxo.scriptPubKey}
         </foreach>
 
     </insert>
+
+    <update id="updateUTXOToUsed">
+        UPDATE `btc_withdraw_utxo` SET `status` = '2' WHERE txid = #{txId} and vout = #{vout}
+    </update>
 
 
 </mapper>
