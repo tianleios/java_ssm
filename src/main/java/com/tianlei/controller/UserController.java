@@ -5,7 +5,6 @@ import com.tianlei.common.Response;
 import com.tianlei.pojo.Product;
 import com.tianlei.pojo.User;
 import com.tianlei.service.IUserService;
-import eth.ProductAddress.ETHAddressFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,14 +75,7 @@ public class UserController {
     @RequestMapping(path = "/list", method = RequestMethod.GET)
     public Response<List<User>> getUsers() {
 
-        try {
 
-            String address = ETHAddressFactory.productAddress("222");
-
-        } catch (Exception e) {
-
-
-        }
 
         return iUserService.getUsers();
 

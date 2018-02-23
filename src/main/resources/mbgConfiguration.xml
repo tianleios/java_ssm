@@ -16,10 +16,10 @@
         </commentGenerator>
 
         <!-- 数据库链接URL、用户名、密码 -->
-        <jdbcConnection driverClass="${jdbc.driverClassName}"
-                        connectionURL="${jdbc.url}"
-                        userId="${jdbc.username}"
-                        password="${jdbc.password}">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/btc"
+                        userId="root"
+                        password="q4121585">
         </jdbcConnection>
 
         <!--
@@ -35,7 +35,7 @@
         也可以使用“MAVEN”来自动生成，这样生成的代码会在target/generatord-source目录下
         -->
         <!--<javaModelGenerator targetPackage="com.joey.mybaties.test.pojo" targetProject="MAVEN">-->
-        <javaModelGenerator targetPackage="com.btc.demo.domain" targetProject="./src/main/java">
+        <javaModelGenerator targetPackage="com.btc.domain" targetProject="./src/main/java">
             <property name="enableSubPackages" value="true"/>
             <!-- 从数据库返回的值被清理前后的空格  -->
             <property name="trimStrings" value="true" />
@@ -47,41 +47,38 @@
         </sqlMapGenerator>
 
         <!-- 对应的Mapper接口类文件 -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.btc.demo.dao" targetProject="./src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.btc.dao" targetProject="./src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
 
         <!-- 列出要生成代码的所有表，这里配置的是不生成Example文件 -->
-        <table tableName="tctq_eth_address" domainObjectName="EthAddress"
-               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false" >
+        <table tableName="btc_withdraw" domainObjectName="BTCWithdraw"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false" >
             <!--<property name="useActualColumnNames" value="false"/>-->
         </table>
 
-        <table tableName="btc_address" domainObjectName="BTCAddress"
-               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false" >
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        </table>
+        <!--<table tableName="btc_address" domainObjectName="BTCAddress"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--&lt;!&ndash;<property name="useActualColumnNames" value="false"/>&ndash;&gt;-->
+        <!--</table>-->
 
-        <table tableName="btc_default_utxo" domainObjectName="BTCDefaultUTXO"
-               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false" >
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        </table>
+        <!--<table tableName="btc_default_utxo" domainObjectName="BTCDefaultUTXO"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--&lt;!&ndash;<property name="useActualColumnNames" value="false"/>&ndash;&gt;-->
+        <!--</table>-->
 
-        <table tableName="btc_withdraw_utxo" domainObjectName="BTCWithdrawUTXO"
-               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false" >
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        </table>
-
-
-
-
-
-
+        <!--<table tableName="btc_withdraw_utxo" domainObjectName="BTCWithdrawUTXO"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--&lt;!&ndash;<property name="useActualColumnNames" value="false"/>&ndash;&gt;-->
+        <!--</table>-->
 
     </context>
 </generatorConfiguration>

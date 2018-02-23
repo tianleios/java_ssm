@@ -17,7 +17,7 @@
        "
 >
 
-    <context:component-scan base-package="com.tianlei" annotation-config="true"/>
+    <!--<context:component-scan base-package="com.tianlei" annotation-config="true"/>-->
     <context:component-scan base-package="com.btc" annotation-config="true"/>
 
     <!--<aop:aspectj-autoproxy/>-->
