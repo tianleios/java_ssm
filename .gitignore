@@ -7,3 +7,4 @@
 /classes
 log4j.properties
 *.log
+out
